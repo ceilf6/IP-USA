@@ -1,4 +1,4 @@
-> 背景：6.9 号我从 meituan 走了、得继续用自己的模型，6.10 号 Fable 5 模型发布了，并且 22 号后就只支持 API 调用，于是我本来想着用 codex 进行期末复习转变尝试 cc 了
+> 背景：6.9 号我从 meituan 走了、得继续用自己的模型，6.10 号 Fable 5 模型发布了，并且 22 号后就只支持 API 调用
 
 1. 上 https://www.aaitr.com/clientarea.php 购买 VPS 服务器
 2. ssh 登录主机
