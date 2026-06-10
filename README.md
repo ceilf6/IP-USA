@@ -64,77 +64,77 @@
 
 4. 打开 Clash Verge 在 `全局扩展脚本 Script`，粘贴下面脚本，注意把 `FRONTIER_PASS` 改成你在 VPS 上安装 SOCKS5 后生成的密码
 
-```jsx
-function main(config) {
-  const FRONTIER_NAME = "US-Frontier-Residential";
-  const DIALER_GROUP = "Frontier-前置机场";
-  const CLAUDE_GROUP = "Claude-住宅出口";
+   ```jsx
+   function main(config) {
+     const FRONTIER_NAME = "US-Frontier-Residential";
+     const DIALER_GROUP = "Frontier-前置机场";
+     const CLAUDE_GROUP = "Claude-住宅出口";
+   
+     const FRONTIER_HOST = "你的IP地址";
+     const FRONTIER_PORT = 你的端口;
+     const FRONTIER_USER = "frontier";
+     const FRONTIER_PASS = "替换成你的SOCKS5密码";
+   
+     const preferredDialers = [
+       "🇭🇰 香港S01",
+       "🇯🇵 日本S01 | IEPL",
+       "🇺🇲 美国S01 | IEPL | x1.5",
+       "🇺🇲 美国S02 | IEPL | x1.5",
+     ];
+   
+     config.proxies = config.proxies || [];
+     config["proxy-groups"] = config["proxy-groups"] || [];
+     config.rules = config.rules || [];
+   
+     const existingProxyNames = new Set(config.proxies.map((p) => p.name));
+     const dialerProxies = preferredDialers.filter((name) =>
+       existingProxyNames.has(name),
+     );
+   
+     if (dialerProxies.length === 0) {
+       throw new Error("没有找到可用前置机场节点，请检查节点名称");
+     }
+   
+     config.proxies = config.proxies.filter((p) => p.name !== FRONTIER_NAME);
+     config["proxy-groups"] = config["proxy-groups"].filter(
+       (g) => g.name !== DIALER_GROUP && g.name !== CLAUDE_GROUP,
+     );
+     config.rules = config.rules.filter((rule) => !rule.includes(CLAUDE_GROUP));
+   
+     config["proxy-groups"].push({
+       name: DIALER_GROUP,
+       type: "select",
+       proxies: dialerProxies,
+     });
+   
+     config.proxies.push({
+       name: FRONTIER_NAME,
+       type: "socks5",
+       server: FRONTIER_HOST,
+       port: FRONTIER_PORT,
+       username: FRONTIER_USER,
+       password: FRONTIER_PASS,
+       udp: false,
+       "dialer-proxy": DIALER_GROUP,
+     });
+   
+     config["proxy-groups"].push({
+       name: CLAUDE_GROUP,
+       type: "select",
+       proxies: [FRONTIER_NAME, DIALER_GROUP, "DIRECT"],
+     });
+   
+     config.rules = [
+       `DOMAIN-SUFFIX,anthropic.com,${CLAUDE_GROUP}`,
+       `DOMAIN-SUFFIX,claude.ai,${CLAUDE_GROUP}`,
+       ...config.rules,
+     ];
+   
+     return config;
+   }
+   ```
 
-  const FRONTIER_HOST = "你的IP地址";
-  const FRONTIER_PORT = 你的端口;
-  const FRONTIER_USER = "frontier";
-  const FRONTIER_PASS = "替换成你的SOCKS5密码";
-
-  const preferredDialers = [
-    "🇭🇰 香港S01",
-    "🇯🇵 日本S01 | IEPL",
-    "🇺🇲 美国S01 | IEPL | x1.5",
-    "🇺🇲 美国S02 | IEPL | x1.5",
-  ];
-
-  config.proxies = config.proxies || [];
-  config["proxy-groups"] = config["proxy-groups"] || [];
-  config.rules = config.rules || [];
-
-  const existingProxyNames = new Set(config.proxies.map((p) => p.name));
-  const dialerProxies = preferredDialers.filter((name) =>
-    existingProxyNames.has(name),
-  );
-
-  if (dialerProxies.length === 0) {
-    throw new Error("没有找到可用前置机场节点，请检查节点名称");
-  }
-
-  config.proxies = config.proxies.filter((p) => p.name !== FRONTIER_NAME);
-  config["proxy-groups"] = config["proxy-groups"].filter(
-    (g) => g.name !== DIALER_GROUP && g.name !== CLAUDE_GROUP,
-  );
-  config.rules = config.rules.filter((rule) => !rule.includes(CLAUDE_GROUP));
-
-  config["proxy-groups"].push({
-    name: DIALER_GROUP,
-    type: "select",
-    proxies: dialerProxies,
-  });
-
-  config.proxies.push({
-    name: FRONTIER_NAME,
-    type: "socks5",
-    server: FRONTIER_HOST,
-    port: FRONTIER_PORT,
-    username: FRONTIER_USER,
-    password: FRONTIER_PASS,
-    udp: false,
-    "dialer-proxy": DIALER_GROUP,
-  });
-
-  config["proxy-groups"].push({
-    name: CLAUDE_GROUP,
-    type: "select",
-    proxies: [FRONTIER_NAME, DIALER_GROUP, "DIRECT"],
-  });
-
-  config.rules = [
-    `DOMAIN-SUFFIX,anthropic.com,${CLAUDE_GROUP}`,
-    `DOMAIN-SUFFIX,claude.ai,${CLAUDE_GROUP}`,
-    ...config.rules,
-  ];
-
-  return config;
-}
-```
-
-1. 配置 Clash Verge
+5. 配置 Clash Verge
 
    ```jsx
    代理模式：全局
@@ -145,7 +145,7 @@ function main(config) {
 
    ![1781088576389](image/README/1781088576389.png)
 
-2. 最后可以来到 https://ip.net.coffee/claude/ 测一下你的 IP 纯净度
+6. 最后可以来到 https://ip.net.coffee/claude/ 测一下你的 IP 纯净度
 
    ![1781088586875](image/README/1781088586875.png)
 
