@@ -61,31 +61,8 @@
       ```
 
 3. 选择一个机场节点作为前置节点，记住这个节点名字
-4. ~~在 Clash Verge 中的 “全局扩展覆写配置” 中加入~~
 
-   ```jsx
-   proxies:
-     - name: "US-Frontier-Residential"
-       type: socks5
-       server: 替换为你的家宽IP地址
-       port: 替换为你的端口
-       username: frontier
-       password: "替换成上一步输出的密码"
-       udp: false
-       dialer-proxy: "替换成你的机场节点完整名称"
-
-   proxy-groups:
-     - name: "Claude-住宅出口"
-       type: select
-       proxies:
-         - "US-Frontier-Residential"
-
-   rules:
-     - DOMAIN-SUFFIX,anthropic.com,Claude-住宅出口
-     - DOMAIN-SUFFIX,claude.ai,Claude-住宅出口
-   ```
-
-5. 打开 Clash Verge 在 `全局扩展脚本 Script`，粘贴下面脚本，注意把 `FRONTIER_PASS` 改成你在 VPS 上安装 SOCKS5 后生成的密码
+4. 打开 Clash Verge 在 `全局扩展脚本 Script`，粘贴下面脚本，注意把 `FRONTIER_PASS` 改成你在 VPS 上安装 SOCKS5 后生成的密码
 
 ```jsx
 function main(config) {
