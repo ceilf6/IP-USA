@@ -171,3 +171,19 @@ function main(config) {
 2. 最后可以来到 https://ip.net.coffee/claude/ 测一下你的 IP 纯净度
 
    ![1781088586875](image/README/1781088586875.png)
+
+iphone 上配置也类似
+
+1. 打开 Shadowrocket 导入你的机场前置节点配置
+2. 添加住宅节点
+
+   ```jsx
+   Type / 类型：Socks5 或 Socks
+   Address / 地址：你买到的 IP 地址
+   Port / 端口：你的端口
+   User / 用户名：frontier
+   Password / 密码：填你 VPS 上 gost 输出的 SOCKS5 密码
+   Remark / 备注：US-Frontier-Residential
+   ```
+
+3. 往下找找到 “代理通过” 选择你的机场前置节点
