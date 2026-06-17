@@ -1,5 +1,3 @@
-> 背景：6.9 号我从 meituan 走了、得继续用自己的模型，6.10 号 Fable 5 模型发布了，并且 22 号后就只支持 API 调用
-
 1. 上 https://www.aaitr.com/clientarea.php 购买 VPS 服务器
 2. ssh 登录主机
    1. 在 VPS 上安装 SOCKS5。由于你已经有机器的 root 权限了，所以下面的帐号、密码、端口你可以任意设置
