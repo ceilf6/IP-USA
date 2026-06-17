@@ -2,8 +2,8 @@
 
 1. 上 https://www.aaitr.com/clientarea.php 购买 VPS 服务器
 2. ssh 登录主机
-   1. 在 VPS 上安装 SOCKS5
-
+   1. 在 VPS 上安装 SOCKS5。由于你已经有机器的 root 权限了，所以下面的帐号、密码、端口你可以任意设置
+      
       ```jsx
       apt update && apt install -y curl tar ufw
 
@@ -13,8 +13,8 @@
       install -m 755 gost /usr/local/bin/gost
 
       PROXY_USER="frontier"
-      PROXY_PASS="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 24)"
-      PROXY_PORT=你的端口
+      PROXY_PASS="${你想设置的密码}"
+      PROXY_PORT="${你想设置的端口}"
 
       mkdir -p /etc/gost
       cat > /etc/gost/config.yaml <<EOF
